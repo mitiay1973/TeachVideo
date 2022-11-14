@@ -1,0 +1,65 @@
+package com.example.teachvideo;
+
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayer.Provider;
+import com.google.android.youtube.player.YouTubePlayerView;
+
+import android.os.Bundle;
+
+import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class YouTubeActivity extends YouTubeBaseActivity implements
+        YouTubePlayer.OnInitializedListener {
+
+    private YouTubePlayerView playerview;
+    private YouTubePlayer youtubeplayer;
+    private EditText editVideoID;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        playerview = (YouTubePlayerView) findViewById(R.id.youtubeplayer);
+        editVideoID = (EditText) findViewById(R.id.editUrl);
+        playerview.initialize("AIzaSyCyfLCpjzz4mhjwN3zGXih6kCyRM9cAeOw", this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public void onInitializationFailure(Provider arg0,
+                                        YouTubeInitializationResult arg1) {
+        Toast.makeText(this, "Ошибка при инициализации", Toast.LENGTH_LONG)
+                .show();
+    }
+
+    public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                                        YouTubePlayer player, boolean wasRestored) {
+        youtubeplayer = player;
+        if (!wasRestored) {
+            Toast.makeText(this, "Инициализация прошла успешно",
+                    Toast.LENGTH_LONG).show();
+            player.cueVideo("vL8sp4VAOnU");
+        }
+    }
+
+    protected YouTubePlayer.Provider getYouTubePlayerProvider() {
+        return (YouTubePlayerView) findViewById(R.id.youtubeplayer);
+    }
+
+    public void onClick(View v) {
+        // youtubeplayer.cueVideo(editVideoID.getText().toString());
+        youtubeplayer.cueVideo(editVideoID.getText().toString());
+    }
+}
