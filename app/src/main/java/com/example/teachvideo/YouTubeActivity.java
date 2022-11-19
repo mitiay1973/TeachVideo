@@ -31,6 +31,7 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
         mask=getIntent().getParcelableExtra("video");
         NameVideo =  (TextView) findViewById(R.id.Name);
         playerview = (YouTubePlayerView) findViewById(R.id.player);
+        video=mask.getVideo();
         NameVideo.setText(mask.getName());
         playerview.initialize("AIzaSyCyfLCpjzz4mhjwN3zGXih6kCyRM9cAeOw", this);
     }
@@ -54,7 +55,7 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
         if (!wasRestored) {
             Toast.makeText(this, "Инициализация прошла успешно",
                     Toast.LENGTH_LONG).show();
-            player.cueVideo("_-3n9hIzhc0");
+            player.cueVideo(video);
         }
     }
 
