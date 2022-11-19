@@ -7,10 +7,12 @@ import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        configurationNextButton();
         mask=getIntent().getParcelableExtra("video");
         NameVideo =  (TextView) findViewById(R.id.Name);
         playerview = (YouTubePlayerView) findViewById(R.id.player);
@@ -41,11 +44,20 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-
+    private void configurationNextButton()
+    {
+        Button addData = (Button) findViewById(R.id.back);
+        addData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(YouTubeActivity.this, glavnaya.class));
+            }
+        });
+    }
     @Override
     public void onInitializationFailure(Provider arg0,
                                         YouTubeInitializationResult arg1) {
-        Toast.makeText(this, "Ошибка при инициализации", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Ошибка при загрузке видео", Toast.LENGTH_LONG)
                 .show();
     }
 
@@ -53,7 +65,7 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
                                         YouTubePlayer player, boolean wasRestored) {
         youtubeplayer = player;
         if (!wasRestored) {
-            Toast.makeText(this, "Инициализация прошла успешно",
+            Toast.makeText(this, "Видео успешно загружено",
                     Toast.LENGTH_LONG).show();
             player.cueVideo(video);
         }
