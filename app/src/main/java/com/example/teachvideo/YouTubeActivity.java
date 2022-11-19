@@ -6,11 +6,13 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class YouTubeActivity extends YouTubeBaseActivity implements
@@ -18,16 +20,18 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
 
     private YouTubePlayerView playerview;
     private YouTubePlayer youtubeplayer;
-    private EditText editVideoID;
-
+    private TextView NameVideo;
+    String video;
+    Mask mask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        playerview = (YouTubePlayerView) findViewById(R.id.youtubeplayer);
-        editVideoID = (EditText) findViewById(R.id.editUrl);
+        mask=getIntent().getParcelableExtra("video");
+        NameVideo =  (TextView) findViewById(R.id.Name);
+        playerview = (YouTubePlayerView) findViewById(R.id.player);
+        NameVideo.setText(mask.getName());
         playerview.initialize("AIzaSyCyfLCpjzz4mhjwN3zGXih6kCyRM9cAeOw", this);
     }
 
@@ -50,16 +54,12 @@ public class YouTubeActivity extends YouTubeBaseActivity implements
         if (!wasRestored) {
             Toast.makeText(this, "Инициализация прошла успешно",
                     Toast.LENGTH_LONG).show();
-            player.cueVideo("vL8sp4VAOnU");
+            player.cueVideo("_-3n9hIzhc0");
         }
     }
 
     protected YouTubePlayer.Provider getYouTubePlayerProvider() {
-        return (YouTubePlayerView) findViewById(R.id.youtubeplayer);
+        return (YouTubePlayerView) findViewById(R.id.player);
     }
 
-    public void onClick(View v) {
-        // youtubeplayer.cueVideo(editVideoID.getText().toString());
-        youtubeplayer.cueVideo(editVideoID.getText().toString());
-    }
 }
